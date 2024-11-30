@@ -1,0 +1,8 @@
+spring:
+  # Configuration for Spring Cloud Config
+  config:
+    # Import configuration from the config server running at http://localhost:8888
+    # The 'optional' prefix means that the application will still start even if the config server is not available
+    import: optional:configserver:http://localhost:8888
+  application:
+    name: notification-service

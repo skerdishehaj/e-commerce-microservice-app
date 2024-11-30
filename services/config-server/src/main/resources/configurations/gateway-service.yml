@@ -1,0 +1,43 @@
+server:
+  port: 8222
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: customer-service
+          uri: lb:http://CUSTOMER-SERVICE
+          predicates:
+            - Path=/api/v1/customers/**
+          filters:
+            - PreserveHostHeader
+        - id: order-service
+          uri: lb:http://ORDER-SERVICE
+          predicates:
+            - Path=/api/v1/orders/**
+          filters:
+            - PreserveHostHeader
+        - id: order-lines-service
+          uri: lb:http://ORDER-SERVICE
+          predicates:
+            - Path=/api/v1/order-lines/**
+          filters:
+            - PreserveHostHeader
+        - id: product-service
+          uri: lb:http://PRODUCT-SERVICE
+          predicates:
+            - Path=/api/v1/products/**
+          filters:
+            - PreserveHostHeader
+        # Adding the payment-service route to ensure load balancing when the order-service calls the payment-service for processing payments
+        # This won't be accessed directly from the client
+        - id: payment-service
+          uri: lb:http://PAYMENT-SERVICE
+          predicates:
+            - Path=/api/v1/payments/**
+          filters:
+            - PreserveHostHeader
+#      default-filters:
+#        - AddRequestHeader=Authorization, ${auth.token:default-token} # Automatically forwards headers

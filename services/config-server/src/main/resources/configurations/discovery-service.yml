@@ -1,0 +1,19 @@
+eureka:
+  # This comment addresses a common issue with Eureka where instances may be incorrectly marked as up.
+  # The renewalPercentThreshold is set to 0.85 to ensure that at least 85% of the expected heartbeats are received before considering an instance as down.
+  # Avoid 'EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY'RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE'
+  renewalPercentThreshold: 0.85
+  instance:
+    hostname: localhost
+  client:
+    # This configuration ensures that the Eureka server does not register itself in its own registry,
+    # which is useful to avoid self-registration issues.
+    registerWithEureka: false
+    # Since this is the Eureka server itself, it does not need to fetch the registry from another Eureka server.
+    fetchRegistry: false
+    serviceUrl:
+      # The defaultZone is the URL where the Eureka server is available.
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+server:
+  port: 8761

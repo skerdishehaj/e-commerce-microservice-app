@@ -1,0 +1,21 @@
+# All other configurations will inherit from this file
+# Configuration for Eureka server
+eureka:
+  instance:
+    # Hostname for the Eureka instance
+    hostname: localhost
+  client:
+    serviceUrl:
+      # URL for the Eureka server
+      defaultZone: http://localhost:8761/eureka/
+  spring:
+    cloud:
+      config:
+        # Prevent the config server from overriding system properties
+        override-system-properties: false
+        
+# Zipkin configuration
+management:
+  tracing:
+    sampling:
+      probability: 1.0

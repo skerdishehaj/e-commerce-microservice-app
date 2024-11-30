@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    # URL of the PostgreSQL database
+    url: jdbc:postgresql://localhost:7777/product
+    # Username for the database connection
+    username: skerdi
+    # Password for the database connection
+    password: skerdi
+    # Fully qualified name of the JDBC driver
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      # Validate the schema, make no changes to the database
+      ddl-auto: validate
+    # Specify the database type
+    database: postgresql
+    # Specify the Hibernate dialect for PostgreSQL
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  # Flyway is a database migration tool that helps manage and version database schema changes.
+  # It is used to apply incremental changes to the database schema, ensuring consistency and version control.
+  flyway:
+    # Enable Flyway baseline on migrate
+    baseline-on-migrate: true
+    # Enable Flyway migrations
+    enabled: true
+    # Description for the baseline version
+    baseline-description: "init"
+    # Version to start the baseline
+    baseline-version: 0
+    # Use the same username as the datasource
+    user: ${spring.datasource.username}
+    # Use the same password as the datasource
+    password: ${spring.datasource.password}
+
+server:
+  # Port number for the server
+  port: 8050

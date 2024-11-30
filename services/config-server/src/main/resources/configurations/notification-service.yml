@@ -1,0 +1,43 @@
+server:
+  port: 8040 # The port on which the customer service will run
+spring:
+  data:
+    mongodb:
+      username: skerdi # Username for MongoDB authentication
+      password: skerdi # Password for MongoDB authentication
+      host: localhost # Host where MongoDB is running
+      port: 27017 # Port on which MongoDB is running
+      database: notification # Name of the MongoDB database to use
+      authentication-database: admin # Database to authenticate against
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: paymentGroup, orderGroup
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+        spring.json.type.mapping: orderConfirmation:org.skerdians.ecommerce.kafka.order.OrderConfirmation, paymentConfirmation:org.skerdians.ecommerce.kafka.payment.PaymentConfirmation
+  mail:
+    host: localhost
+    port: 7775
+    username: skerdi
+    password: skerdi
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enabled: true
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
+
+  logging:
+    level:
+      org.springframework.mail: DEBUG # Set logging level for Spring Mail
+      org.springframework.mail.javamail: DEBUG # Set logging level for JavaMail
+
+

@@ -1,0 +1,7 @@
+spring:
+  config:
+    # Import configuration from the config server, if available, at the specified URL
+    import: optional:configserver:http://localhost:8888
+  application:
+    # Name of the Spring Boot application
+    name: product-service

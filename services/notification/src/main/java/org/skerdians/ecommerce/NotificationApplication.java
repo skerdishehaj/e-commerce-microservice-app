@@ -1,0 +1,16 @@
+package org.skerdians.ecommerce;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
+
+@SpringBootApplication
+// Enable the asynchronous execution of methods annotated with @Async
+@EnableAsync
+public class NotificationApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(NotificationApplication.class, args);
+	}
+
+}

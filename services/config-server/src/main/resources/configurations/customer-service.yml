@@ -1,0 +1,11 @@
+server:
+  port: 8090 # The port on which the customer service will run
+spring:
+  data:
+    mongodb:
+      username: skerdi # Username for MongoDB authentication
+      password: skerdi # Password for MongoDB authentication
+      host: localhost # Host where MongoDB is running
+      port: 27017 # Port on which MongoDB is running
+      database: customer # Name of the MongoDB database to use
+      authentication-database: admin # Database to authenticate against

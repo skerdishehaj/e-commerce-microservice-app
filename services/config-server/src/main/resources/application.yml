@@ -1,0 +1,13 @@
+server:
+  port: 8888 # The port on which the config server will run
+spring:
+  profiles:
+    active: native # Use the native profile for configuration
+  application:
+    name: config-server # Name of the Spring Boot application
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/configurations # Location to search for configuration files
+          # classpath is the path of the src/main/resources directory

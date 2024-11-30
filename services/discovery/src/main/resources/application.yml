@@ -1,0 +1,10 @@
+spring:
+  config:
+    # Import configuration from the config server running on localhost:8888
+    # \services\config-server\src\main\resources\application.yml
+    # Port 8888 is the port where the config server is running
+    import: optional:configserver:http://localhost:8888
+  application:
+    # This name must match the name in the config file located at `\services\config-server\src\main\resources\configurations\discovery-service.yml`
+    # This is IMPORTANT because the config file in `\services\config-server\src\main\resources\configurations\discovery-service.yml` MUST have the same name
+    name: discovery-service
