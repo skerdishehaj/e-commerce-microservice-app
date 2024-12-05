@@ -14,7 +14,8 @@ import org.skerdians.ecommerce.order.entity.Order;
 public class OrderLine {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_line_seq")
+    @SequenceGenerator(name = "customer_line_seq", sequenceName = "customer_line_seq", allocationSize = 50)
     private Integer id;
     @ManyToOne
     @JoinColumn(name = "order_id")
