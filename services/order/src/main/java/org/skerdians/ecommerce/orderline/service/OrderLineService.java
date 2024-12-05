@@ -3,6 +3,7 @@ package org.skerdians.ecommerce.orderline.service;
 import lombok.RequiredArgsConstructor;
 import org.skerdians.ecommerce.orderline.dto.OrderLineRequest;
 import org.skerdians.ecommerce.orderline.dto.OrderLineResponse;
+import org.skerdians.ecommerce.orderline.entity.OrderLine;
 import org.skerdians.ecommerce.orderline.repository.OrderLineRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class OrderLineService {
     private final OrderLineMapper mapper;
 
     public Integer saveOrderLine(OrderLineRequest request) {
-        var order = mapper.toOrderLine(request);
+        OrderLine order = mapper.toOrderLine(request);
         return repository.save(order).getId();
     }
 

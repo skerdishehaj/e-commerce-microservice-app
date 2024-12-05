@@ -1,30 +1,74 @@
 services:
 
-  postgres:
-    container_name: ms_pg_sql
+  postgres-order:
+    container_name: ms_pg_sql_order
     image: postgres
     environment:
       POSTGRES_USER: skerdi
       POSTGRES_PASSWORD: skerdi
       PG_DATA: /var/lib/postgresql/data
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - postgres-order:/var/lib/postgresql/data
     ports:
       - 7777:5432
     networks:
       - microservices-net
     restart: unless-stopped
 
-  mongodb:
-    container_name: ms_mongo_db
+  postgres-payment:
+    container_name: ms_pg_sql_payment
+    image: postgres
+    environment:
+      POSTGRES_USER: skerdi
+      POSTGRES_PASSWORD: skerdi
+      PG_DATA: /var/lib/postgresql/data
+    volumes:
+      - postgres-payment:/var/lib/postgresql/data
+    ports:
+      - 7778:5432
+    networks:
+      - microservices-net
+    restart: unless-stopped
+
+  postgres-product:
+    container_name: ms_pg_sql_product
+    image: postgres
+    environment:
+      POSTGRES_USER: skerdi
+      POSTGRES_PASSWORD: skerdi
+      PG_DATA: /var/lib/postgresql/data
+    volumes:
+      - postgres-product:/var/lib/postgresql/data
+    ports:
+      - 7779:5432
+    networks:
+      - microservices-net
+    restart: unless-stopped
+
+  mongodb-notification:
+    container_name: ms_mongo_db_notification
     image: mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: skerdi
       MONGO_INITDB_ROOT_PASSWORD: skerdi
     volumes:
-      - mongo:/data
+      - mongodb-notification:/data
     ports:
       - 27017:27017
+    networks:
+      - microservices-net
+    restart: unless-stopped
+
+  mongodb-customer:
+    container_name: ms_mongo_db_customer
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: skerdi
+      MONGO_INITDB_ROOT_PASSWORD: skerdi
+    volumes:
+      - mongodb-customer:/data
+    ports:
+      - 27018:27017
     networks:
       - microservices-net
     restart: unless-stopped
@@ -75,6 +119,7 @@ services:
       - 9411:9411
     networks:
       - microservices-net
+
   # keycloak
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.2
@@ -95,6 +140,8 @@ networks:
     driver: bridge
 
 volumes:
-  postgres:
-  pgadmin:
-  mongo:
+  postgres-order:
+  postgres-payment:
+  postgres-product:
+  mongodb-notification:
+  mongodb-customer:

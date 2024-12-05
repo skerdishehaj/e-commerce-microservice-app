@@ -1,7 +1,7 @@
 spring:
   datasource:
     # URL of the PostgreSQL database
-    url: jdbc:postgresql://localhost:7777/product
+    url: jdbc:postgresql://localhost:7779/product
     # Username for the database connection
     username: skerdi
     # Password for the database connection

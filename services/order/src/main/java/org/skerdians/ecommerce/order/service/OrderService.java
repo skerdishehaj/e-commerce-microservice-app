@@ -41,7 +41,7 @@ public class OrderService {
 
     @Transactional
     public Integer createOrder(OrderRequest request) {
-        log.info("Order MS - OrderService class - Creating order for customer with ID: {}", request.customerId());
+        log.info("Order MS - OrderService class - Creating order for customer with ID: {} with order: {}", request.customerId(), request);
         CustomerResponse customer = this.customerClient.findCustomerById(request.customerId())
                 .orElseThrow(() -> new BusinessException("Cannot create order:: No customer exists with the provided ID = " + request.customerId()));
         log.info("Order MS - OrderService class - Customer found: {}", customer);
