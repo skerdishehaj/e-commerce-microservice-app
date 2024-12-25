@@ -3,7 +3,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: "http://localhost:9098/realms/micro-services"
+          issuer-uri: "http://localhost:9098/realms/micro-services-api"
   config:
     import: optional:configserver:http://localhost:8888
   application:

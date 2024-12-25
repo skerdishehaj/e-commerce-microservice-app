@@ -1,6 +1,7 @@
 package org.skerdians.ecommerce.customer.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.skerdians.ecommerce.customer.dto.CustomerRequest;
 import org.skerdians.ecommerce.customer.dto.CustomerResponse;
@@ -18,6 +19,7 @@ import static java.lang.String.format;
  * Service class for managing customer-related operations.
  * This class provides methods to {@code create}, {@code update}, {@code find}, and {@code delete} customers.
  */
+@Slf4j
 @Service // Marks this class as a Spring service component
 @RequiredArgsConstructor // Generates a constructor with required arguments (final fields) for dependency injection
 public class CustomerService {
@@ -31,7 +33,10 @@ public class CustomerService {
      * @return the ID of the created customer
      */
     public String createCustomer(CustomerRequest request) {
+        log.info("Creating customer with email: {}", request.email());
         Customer customer = repository.save(mapper.toCustomer(request));
+        log.info("Customer created with ID: {}", customer.getId());
+        log.debug("Customer created: {}", customer);
         return customer.getId();
     }
 
@@ -41,6 +46,7 @@ public class CustomerService {
      * @param request the customer request containing updated customer details
      */
     public void updateCustomer(CustomerRequest request) {
+        log.info("Updating customer with ID: {}", request.id());
         Customer customer = repository.findById(request.id())
                 .orElseThrow(() -> new CustomerNotFoundException(
                         format("Cannot update customer:: No customer found with the provided ID:: %s", request.id())
@@ -48,6 +54,8 @@ public class CustomerService {
 
         mergeCustomer(customer, request);
         repository.save(customer);
+        log.info("Customer updated with ID: {}", customer.getId());
+        log.debug("Customer updated: {}", customer);
     }
 
     /**
@@ -77,9 +85,13 @@ public class CustomerService {
      * @return a list of {@link CustomerResponse}
      */
     public List<CustomerResponse> findAllCustomers() {
-        return repository.findAll().stream()
+        log.info("Retrieving all customers");
+        List<CustomerResponse> customers = repository.findAll().stream()
                 .map(mapper::toCustomerResponse)
                 .collect(Collectors.toList());
+        log.info("Customers retrieved: {}", customers.stream().map(CustomerResponse::id).collect(Collectors.toList()));
+        log.debug("Customers retrieved: {}", customers);
+        return customers;
     }
 
     /**
@@ -89,7 +101,10 @@ public class CustomerService {
      * @return true if the customer exists, false otherwise
      */
     public Boolean existsById(String customerId) {
-        return repository.findById(customerId).isPresent();
+        log.info("Checking existence of customer with ID: {}", customerId);
+        boolean exists = repository.findById(customerId).isPresent();
+        log.info("Customer with ID: {} exists: {}", customerId, exists);
+        return exists;
     }
 
     /**
@@ -99,11 +114,18 @@ public class CustomerService {
      * @return the customer response
      */
     public CustomerResponse findById(String customerId) {
-        return repository.findById(customerId)
+        log.info("Finding customer by ID: {}", customerId);
+        CustomerResponse response = repository.findById(customerId)
                 .map(mapper::toCustomerResponse)
-                .orElseThrow(() -> new CustomerNotFoundException(
+                .orElseThrow(() -> {
+                    log.error("No customer found with the provided ID: {}", customerId);
+                    return new CustomerNotFoundException(
                         format("No customer found with the provided ID:: %s", customerId)
-                ));
+                    );
+                });
+        log.info("Customer found with ID: {}", customerId);
+        log.debug("Customer details: {}", response);
+        return response;
     }
 
     /**
@@ -112,11 +134,15 @@ public class CustomerService {
      * @param customerId the ID of the customer
      */
     public void deleteById(String customerId) {
+        log.info("Attempting to delete customer with ID: {}", customerId);
         if (!existsById(customerId)) {
+            log.error("Cannot delete customer:: No customer found with the provided ID:: {}", customerId);
             throw new CustomerNotFoundException(
                     format("Cannot delete customer:: No customer found with the provided ID:: %s", customerId)
             );
         }
         repository.deleteById(customerId);
+        log.info("Customer successfully deleted with ID: {}", customerId);
+        log.debug("Customer deleted with ID: {}", customerId);
     }
 }
