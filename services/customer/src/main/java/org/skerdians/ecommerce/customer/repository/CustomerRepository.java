@@ -1,5 +1,6 @@
 package org.skerdians.ecommerce.customer.repository;
 
+import io.micrometer.observation.annotation.Observed;
 import org.skerdians.ecommerce.customer.entity.Customer;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -22,5 +23,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @see org.springframework.data.mongodb.repository.MongoRepository
  * @see org.skerdians.ecommerce.customer.entity.Customer
  */
+@Observed
 public interface CustomerRepository extends MongoRepository<Customer, String> {
 }
