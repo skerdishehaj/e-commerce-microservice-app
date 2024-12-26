@@ -40,4 +40,7 @@ spring:
       org.springframework.mail: DEBUG # Set logging level for Spring Mail
       org.springframework.mail.javamail: DEBUG # Set logging level for JavaMail
 
-
+management:
+  observations:
+    key-values:
+      application: notification-service

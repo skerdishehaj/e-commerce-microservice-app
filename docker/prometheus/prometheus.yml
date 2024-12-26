@@ -5,12 +5,36 @@ global:
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
-      - targets: ['prometheus:9090']
+      - targets: [ 'prometheus:9090' ]
+  - job_name: 'config-server'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'host.docker.internal:8888' ] ## only for demo purposes don't use host.docker.internal in production
+  - job_name: 'discovery-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'host.docker.internal:8761' ] ## only for demo purposes don't use host.docker.internal in production
+  - job_name: 'gateway-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'host.docker.internal:8222' ] ## only for demo purposes don't use host.docker.internal in production
+  - job_name: 'notification-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'host.docker.internal:8040' ] ## only for demo purposes don't use host.docker.internal in production
+  - job_name: 'product-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'host.docker.internal:8050' ] ## only for demo purposes don't use host.docker.internal in production
+  - job_name: 'payment-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'host.docker.internal:8060' ] ## only for demo purposes don't use host.docker.internal in production
+  - job_name: 'order-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'host.docker.internal:8070' ] ## only for demo purposes don't use host.docker.internal in production
   - job_name: 'customer-service'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['host.docker.internal:8090'] ## only for demo purposes don't use host.docker.internal in production
-#  - job_name: 'fraud-detection'
-#    metrics_path: '/actuator/prometheus'
-#    static_configs:
-#      - targets: ['host.docker.internal:8081'] ## only for demo purposes don't use host.docker.internal in production
+      - targets: [ 'host.docker.internal:8090' ] ## only for demo purposes don't use host.docker.internal in production

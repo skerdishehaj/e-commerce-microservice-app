@@ -85,7 +85,7 @@ services:
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
-    container_name: zookeeper
+    container_name: ms_zookeeper
     environment:
       ZOOKEEPER_SERVER_ID: 1
       ZOOKEEPER_CLIENT_PORT: 2181
@@ -137,6 +137,7 @@ services:
   # Loki
   loki:
     image: grafana/loki:main
+    container_name: ms_loki
     command: [ '-config.file=/etc/loki/local-config.yaml' ]
     ports:
       - '3100:3100'
@@ -146,6 +147,7 @@ services:
   # Prometheus
   prometheus:
     image: prom/prometheus:v2.46.0
+    container_name: ms_prometheus
     command:
       - --enable-feature=exemplar-storage
       - --config.file=/etc/prometheus/prometheus.yml
@@ -159,6 +161,7 @@ services:
   # Tempo
   tempo:
     image: grafana/tempo:2.2.2
+    container_name: ms_tempo
     command: [ '-config.file=/etc/tempo.yaml' ]
     volumes:
       - ./docker/tempo/tempo.yml:/etc/tempo.yaml:ro
@@ -172,6 +175,7 @@ services:
   # Grafana
   grafana:
     image: grafana/grafana:10.1.0
+    container_name: ms_grafana
     volumes:
       - ./docker/grafana:/etc/grafana/provisioning/datasources:ro
     environment:
