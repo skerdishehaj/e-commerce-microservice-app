@@ -41,3 +41,8 @@ spring:
             - PreserveHostHeader
 #      default-filters:
 #        - AddRequestHeader=Authorization, ${auth.token:default-token} # Automatically forwards headers
+
+management:
+  observations:
+    key-values:
+      application: gateway-service

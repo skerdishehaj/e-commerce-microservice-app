@@ -18,7 +18,8 @@ spring:
     baseline-version: 0
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
-    
+    url: ${spring.datasource.url}
+
   kafka:
     producer:
       bootstrap-servers: localhost:9092
@@ -32,3 +33,9 @@ application:
     customer-url: http://localhost:8222/api/v1/customers
     payment-url: http://localhost:8222/api/v1/payments
     product-url: http://localhost:8222/api/v1/products
+
+
+management:
+  observations:
+    key-values:
+      application: order-service

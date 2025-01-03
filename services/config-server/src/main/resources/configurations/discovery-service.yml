@@ -17,3 +17,8 @@ eureka:
 
 server:
   port: 8761
+
+management:
+  observations:
+    key-values:
+      application: discovery-service

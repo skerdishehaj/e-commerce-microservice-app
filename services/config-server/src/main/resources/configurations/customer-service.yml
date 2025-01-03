@@ -9,3 +9,8 @@ spring:
       port: 27018 # Port on which MongoDB is running
       database: customer # Name of the MongoDB database to use
       authentication-database: admin # Database to authenticate against
+
+management:
+  observations:
+    key-values:
+      application: customer-service

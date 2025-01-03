@@ -31,7 +31,14 @@ spring:
     user: ${spring.datasource.username}
     # Use the same password as the datasource
     password: ${spring.datasource.password}
+    # Use the same url as the datasource
+    url: ${spring.datasource.url}
 
 server:
   # Port number for the server
   port: 8050
+
+management:
+  observations:
+    key-values:
+      application: product-service

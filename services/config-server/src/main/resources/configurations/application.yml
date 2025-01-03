@@ -1,5 +1,3 @@
-# All other configurations will inherit from this file
-# Configuration for Eureka server
 eureka:
   instance:
     # Hostname for the Eureka instance
@@ -13,9 +11,28 @@ eureka:
       config:
         # Prevent the config server from overriding system properties
         override-system-properties: false
-        
-# Zipkin configuration
+
 management:
   tracing:
     sampling:
       probability: 1.0
+  endpoint:
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+#    management:
+#      observations:
+#        key-values:
+#          application:
+#            - config-server
+# All other configurations will inherit from this file
+# Configuration for Eureka server

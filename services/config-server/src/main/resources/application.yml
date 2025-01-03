@@ -11,3 +11,24 @@ spring:
         native:
           search-locations: classpath:/configurations # Location to search for configuration files
           # classpath is the path of the src/main/resources directory
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoint:
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+  observations:
+    key-values:
+      application: ${spring.application.name}

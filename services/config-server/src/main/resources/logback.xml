@@ -21,7 +21,4 @@
     <root level="INFO">
         <appender-ref ref="LOKI"/>
     </root>
-    <logger name="org.skerdians.ecommerce" level="INFO" additivity="false">
-        <appender-ref ref="LOKI"/>
-    </logger>
 </configuration>
