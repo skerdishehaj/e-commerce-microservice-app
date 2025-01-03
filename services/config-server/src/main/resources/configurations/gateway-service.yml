@@ -1,48 +1,101 @@
 server:
   port: 8222
 spring:
+  webflux:
+    resources:
+      chain:
+        enabled: true
   cloud:
     gateway:
       discovery:
         locator:
           enabled: true
       routes:
+
         - id: customer-service
           uri: lb:http://CUSTOMER-SERVICE
           predicates:
             - Path=/api/v1/customers/**
+
+        - id: customer-service-swagger
+          uri: lb:http://CUSTOMER-SERVICE
+          predicates:
+            - Path=/aggregates/customer-service/v3/api-docs
           filters:
-            - PreserveHostHeader
+            - SetPath=/v3/api-docs
+
+
         - id: order-service
           uri: lb:http://ORDER-SERVICE
           predicates:
             - Path=/api/v1/orders/**
+
+        - id: order-service-swagger
+          uri: lb:http://ORDER-SERVICE
+          predicates:
+            - Path=/aggregates/order-service/v3/api-docs
           filters:
-            - PreserveHostHeader
+            - SetPath=/v3/api-docs
+
         - id: order-lines-service
           uri: lb:http://ORDER-SERVICE
           predicates:
             - Path=/api/v1/order-lines/**
-          filters:
-            - PreserveHostHeader
+
+
         - id: product-service
           uri: lb:http://PRODUCT-SERVICE
           predicates:
             - Path=/api/v1/products/**
+
+        - id: product-service-swagger
+          uri: lb:http://PRODUCT-SERVICE
+          predicates:
+            - Path=/aggregates/product-service/v3/api-docs
           filters:
-            - PreserveHostHeader
+            - SetPath=/v3/api-docs
+
+
         # Adding the payment-service route to ensure load balancing when the order-service calls the payment-service for processing payments
         # This won't be accessed directly from the client
         - id: payment-service
           uri: lb:http://PAYMENT-SERVICE
           predicates:
             - Path=/api/v1/payments/**
+
+        - id: payment-service-swagger
+          uri: lb:http://PAYMENT-SERVICE
+          predicates:
+            - Path=/aggregates/payment-service/v3/api-docs
           filters:
-            - PreserveHostHeader
-#      default-filters:
-#        - AddRequestHeader=Authorization, ${auth.token:default-token} # Automatically forwards headers
+            - SetPath=/v3/api-docs
+
+
+# Configs for docs aggregator
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: Product Service API
+        url: /aggregates/product-service/v3/api-docs
+      - name: Customer Service API
+        url: /aggregates/customer-service/v3/api-docs
+      - name: Order Service API
+        url: /aggregates/order-service/v3/api-docs
+      - name: Payment Service API
+        url: /aggregates/payment-service/v3/api-docs
+  api-docs:
+    path: /v3/api-docs
+
 
 management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus, gateway
   observations:
     key-values:
       application: gateway-service

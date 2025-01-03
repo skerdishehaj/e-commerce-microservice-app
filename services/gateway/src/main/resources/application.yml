@@ -8,11 +8,3 @@ spring:
     import: optional:configserver:http://localhost:8888
   application:
     name: gateway-service
-
-  # Configures the logging level for the Spring Cloud Gateway to DEBUG.
-#  logging:
-#    level:
-#      org.springframework.cloud.gateway: DEBUG
-#      org.springframework.security: DEBUG
-#      org.springframework.security.oauth2: DEBUG
-#      org.springframework.web: DEBUG
