@@ -10,6 +10,8 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @Configuration
 @EnableWebFluxSecurity // ??? What is the difference with just EnableSecurity
 public class SecurityConfig {
+    private final String[] freeResourceUrls = {"/aggregates/**", "/webjars/**", "/eureka/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
+            "/swagger-resources/**", "/api-docs/**", "/actuator/**"};
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity serverHttpSecurity) {
@@ -17,7 +19,7 @@ public class SecurityConfig {
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 // In reactive web we have authorizeExchange instead of authorizeRequests
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/eureka/**").permitAll()
+                        .pathMatchers(freeResourceUrls).permitAll()
                         .anyExchange().authenticated()//permitAll() // todo : authenticate all other requests
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));

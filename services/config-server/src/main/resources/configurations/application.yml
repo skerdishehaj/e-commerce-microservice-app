@@ -1,3 +1,5 @@
+# All other configurations will inherit from this file
+# Configuration for Eureka server
 eureka:
   instance:
     # Hostname for the Eureka instance
@@ -29,10 +31,3 @@ management:
         http:
           server:
             requests: true
-#    management:
-#      observations:
-#        key-values:
-#          application:
-#            - config-server
-# All other configurations will inherit from this file
-# Configuration for Eureka server
