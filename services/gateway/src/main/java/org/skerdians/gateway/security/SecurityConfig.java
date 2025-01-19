@@ -20,7 +20,7 @@ public class SecurityConfig {
                 // In reactive web we have authorizeExchange instead of authorizeRequests
                 .authorizeExchange(exchange -> exchange
                         .pathMatchers(freeResourceUrls).permitAll()
-                        .anyExchange().authenticated()//permitAll() // todo : authenticate all other requests
+                        .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
