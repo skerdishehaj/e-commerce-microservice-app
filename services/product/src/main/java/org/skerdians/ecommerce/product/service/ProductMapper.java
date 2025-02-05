@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductMapper {
     public Product toProduct(ProductRequest request) {
+        if (request == null) {
+            return null;
+        }
         return Product.builder()
                 .id(request.id())
                 .name(request.name())
