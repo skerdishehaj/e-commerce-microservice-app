@@ -2,8 +2,10 @@ package org.skerdians.ecommerce.customer.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import org.skerdians.ecommerce.customer.entity.Address;
 
+@Builder
 public record CustomerResponse(
         String id,
         @NotNull(message = "Customer First Name is required")
