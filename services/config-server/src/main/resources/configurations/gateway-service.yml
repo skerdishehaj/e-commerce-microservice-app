@@ -10,6 +10,16 @@ spring:
       discovery:
         locator:
           enabled: true
+      httpclient:
+        connect-timeout: 1000
+        response-timeout: 2s
+  data:
+    redis:
+      repositories:
+        connect-timeout: 2s
+        host: localhost
+        port: 6379
+        timeout: 1s
 
 # Configs for docs aggregator
 springdoc:
@@ -35,7 +45,20 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, info, metrics, prometheus, gateway
+        include: health, info, metrics, prometheus, gateway, *
   observations:
     key-values:
       application: gateway-service
+
+# Resilience4j Configs
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      # The size of the sliding window which is used to record the outcome of calls when the CircuitBreaker is closed.
+      slidingWindowSize: 10
+      # The number of calls that are allowed to pass through when the CircuitBreaker is half-open.
+      permittedNumberOfCallsInHalfOpenState: 2
+      # The failure rate threshold in percentage. When the failure rate is equal or greater than the threshold, the CircuitBreaker transitions to open state.
+      failureRateThreshold: 50
+      # The time that the CircuitBreaker should wait before transitioning from open to half-open state.
+      waitDurationInOpenState: 10000 #ms
