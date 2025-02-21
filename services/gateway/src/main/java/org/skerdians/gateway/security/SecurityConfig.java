@@ -10,7 +10,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @Configuration
 @EnableWebFluxSecurity // ??? What is the difference with just EnableSecurity
 public class SecurityConfig {
-    private final String[] freeResourceUrls = {"/aggregates/**", "/webjars/**", "/eureka/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
+    private final String[] freeResourceUrls = {"/aggregates/**", "/fallback/**" , "/webjars/**", "/eureka/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
             "/swagger-resources/**", "/api-docs/**", "/actuator/**"};
 
     @Bean

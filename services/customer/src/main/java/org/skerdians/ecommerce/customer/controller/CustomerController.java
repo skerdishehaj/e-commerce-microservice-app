@@ -2,6 +2,7 @@ package org.skerdians.ecommerce.customer.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.skerdians.ecommerce.customer.dto.CustomerRequest;
 import org.skerdians.ecommerce.customer.dto.CustomerResponse;
 import org.skerdians.ecommerce.customer.service.CustomerService;
@@ -20,6 +21,7 @@ import java.util.List;
 @RequestMapping("/api/v1/customers")
 // Generates a constructor with required arguments (final fields) for dependency injection
 @RequiredArgsConstructor
+@Slf4j
 public class CustomerController {
     private final CustomerService service;
 
@@ -87,6 +89,7 @@ public class CustomerController {
             // @PathVariable binds the method parameter to the value of the URI template variable
             @PathVariable("customer-id") String customerId
     ) {
+        log.info("Retrieved request to find customer with ID: {}", customerId);
         return ResponseEntity.ok(service.findById(customerId));
     }
 

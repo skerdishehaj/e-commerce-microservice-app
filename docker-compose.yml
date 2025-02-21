@@ -187,6 +187,15 @@ services:
     networks:
       - microservices-net
 
+  redis:
+    container_name: ms_redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - microservices-net
+    restart: unless-stopped
+
 networks:
   microservices-net:
     driver: bridge
